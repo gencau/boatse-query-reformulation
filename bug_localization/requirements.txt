@@ -1,0 +1,9 @@
+pyserini
+datasets
+hydra-config
+dotenv
+tenacity
+pathlib
+faiss
+gitpython
+unidiff

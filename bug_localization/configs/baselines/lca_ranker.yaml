@@ -1,0 +1,28 @@
+hydra:
+  job:
+    name: ${backbone.name}_${backbone.model_name}_${backbone.experiment}
+  run:
+    dir: /Users/gen/workspace/long-context-experiments/bug_localization/output/lca/ranker/${hydra:job.name}${run_suffix}
+  job_logging:
+    root:
+      handlers: [console, file]
+backbone:
+  # Switch to a backbone implementation that uses the Ollama API.
+  _target_: src.baselines.backbones.agent.best_n_ranker_backbone.BestOfNRankerBackbone
+  name: qwen-agent
+  # This is the model identifier as recognized by Ollama.
+  model_name: qwen2.5-coder-32b-16k
+
+  prompt:
+    _target_: src.baselines.backbones.agent.prompts.agent_context_prompt.AgentContextPrompt
+  
+  retriever: 
+    _target_: src.baselines.backbones.agent.context.summary_retriever.SummaryRetriever
+    database_location: "/Volumes/T9/chroma_db_summaries_lca"
+  experiment: bm25-lca-ranker
+
+data_source:
+  _target_: src.baselines.data_sources.csv_data_source.CSVDataSource
+  path: /Users/gen/workspace/long-context-experiments/bug_localization/output/lca/bm25/bm25-retriever_10_dep_eval/results.csv
+
+run_suffix: "_top10"

@@ -1,0 +1,32 @@
+hydra:
+  job:
+    name: ${backbone.name}_${backbone.model_name}_${backbone.experiment}
+  run:
+    dir: /Users/gen/workspace/boatse-rag-agents/bug_localization/output/lca/extracted/${hydra:job.name}${run_suffix}
+  job_logging:
+    root:
+      handlers: [console, file]
+backbone:
+  # Switch to a backbone implementation that uses the Ollama API.
+  _target_: src.baselines.backbones.agent.info_extraction_backbone.InfoExtractionBackbone
+  name: qwen-agent
+  # This is the model identifier as recognized by Ollama.
+  model_name: qwen2.5-coder-32b-16k
+
+  prompt:
+    _target_: src.baselines.backbones.agent.prompts.agent_context_prompt.AgentContextPrompt
+  
+  experiment: extracting
+
+data_source:
+  _target_: src.baselines.data_sources.hf_data_source.HFDataSource
+  repos_dir: /Volumes/T9/lca/cloned_repos_test 
+  cache_dir: null
+  hub_name: tiginamaria/bug-localization
+  configs:
+    - py
+    - java
+    - kt
+  split: test
+
+run_suffix: "__1"

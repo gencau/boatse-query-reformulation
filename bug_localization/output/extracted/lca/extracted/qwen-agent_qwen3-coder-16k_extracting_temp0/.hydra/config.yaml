@@ -1,0 +1,18 @@
+backbone:
+  _target_: src.baselines.backbones.agent.info_extraction_backbone.InfoExtractionBackbone
+  name: qwen-agent
+  model_name: qwen3-coder-16k
+  prompt:
+    _target_: src.baselines.backbones.agent.prompts.agent_context_prompt.AgentContextPrompt
+  experiment: extracting
+data_source:
+  _target_: src.baselines.data_sources.hf_data_source.HFDataSource
+  repos_dir: /Volumes/T9/lca/cloned_repos_test
+  cache_dir: null
+  hub_name: tiginamaria/bug-localization
+  configs:
+  - py
+  - java
+  - kt
+  split: test
+run_suffix: _temp0

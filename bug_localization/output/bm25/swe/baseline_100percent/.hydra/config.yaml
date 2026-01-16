@@ -1,0 +1,16 @@
+backbone:
+  _target_: src.baselines.backbones.bm25.bm25_retriever.BM25Backbone
+  name: bm25-retriever
+  data_path: ${data_source.repos_dir}
+  topk: 0
+  percent: 100
+  k1: 0.9
+  b: 0.4
+data_source:
+  _target_: src.baselines.data_sources.swe_bench_data_source.SWEDataSource
+  repos_dir: /Volumes/T9/repos_lite
+  cache_dir: null
+  hub_name: /Users/gen/workspace/SWE-Bench/swebench/inference/hf_datasets/SWE-bench_Lite
+  split: test
+reindex: true
+run_suffix: _percent
